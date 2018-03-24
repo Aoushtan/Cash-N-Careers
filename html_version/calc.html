@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta name="author" content="Austin Lemacks">
+		<meta name="description" content="">
+		<title>Cash N Careers</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+		<script type = "text/javascript" src="js/index_logic.js"></script>
+		<script type="text/javascript" src="js/excel_connect.js"></script>
+	</head>
+	<body>
+		<div id="container">
+			<div id="header">
+				<hr>
+				<center><h1 id="title">Cash N Careers</h1></center>
+				<hr>
+			</div>
+			<div id="body">
+				<center>
+					<p><b>Welcome to the Cash and Careers financial comparison application.
+					</b></p>
+          <p>This application will allow you to compare the costs of a obtaining a college
+            degree versus working full-time.
+          </p>
+          <p>To begin please input the required values and then click Calculate
+            when finished to compare your results.
+          </p>
+
+
+					<h3>College Education</h3>
+					College: <input type="text" placeholder="Enter the College" id="col_name"/><br>
+          Tuition: <input type="text" placeholder="Enter your Tuition Cost" id="tuition"/><br>
+          Scholarships: <input type="text" placeholder="Enter your estimated Scholarships" id="gifts"/><br>
+          Part-Time Income: <input type="text" placeholder="Enter your income yearly" id="part_time"/><br>
+          Gifts: <input type="text" placeholder="Enter your estimated gifts" id="gifts"/><br>
+          Career: <input type="text" placeholder="Enter your yearly income" id="col_career"/><br>
+					Salary: <input type="text" placeholder="Enter your Salary after College" id="col_pay"/><br>
+
+					<br>
+
+
+        <center>
+        <h3>High School Education</h3>
+        Job Title: <input type="text" placeholder="Enter your yearly income" id="hs_career"/><br>
+        Yearly Income: <input type="text" placeholder="Enter your yearly income" id="hs_pay"/><br>
+
+        <h3>College Education</h3>
+        Student Loans:<br>
+        Savings:<br>
+        Loan Balance:<br>
+        Monthly Payment:<br>
+        College Monthly Raw Dollar Value:<br>
+        College Initial Monthly Discrectionary:<br>
+        College Lifetime Discrectionary:<br>
+        College Lifetime Net Present Value:<br>
+        Higschool Monthly Raw Dollar Value:<br>
+        Higschool Initial Monthly Discrectionary:<br>
+        Higschool Lifetime Discrectionary:<br>
+        Higschool Lifetime Net Present Value:<br>
+        Monthly Raw Dollar Value Difference:<br>
+        Initial Monthly Discrectionary Difference:<br>
+        Lifetime Discrectionary Difference:<br>
+        Lifetime Net Present Value Difference:<br>
+
+
+
+        <br>
+
+
+
+        <br>
+        <span id="error_message_reg"></span><br>
+        <button id="Calculate">Calculate</button>
+
+
+
+				<br><br>
+				<span id="test"></span>
+				</center>
+			</div>
+			<div id="footer">
+					<font size="1">Last updated: March 12, 2018</font>
+			</div>
+		</div>
+	</body>
+</html>
