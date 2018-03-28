@@ -69,8 +69,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="cash-and-careers-2018.xlsx" />
-    <Content Include="excel.xlsx" />
+    <Content Include="CNC.xlsm" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
@@ -90,6 +89,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="User.cs" />
     <Compile Include="history.aspx.cs">
       <DependentUpon>history.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
