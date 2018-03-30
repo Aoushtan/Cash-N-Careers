@@ -9,6 +9,7 @@ namespace CashNCareers
     {
         public int UserID;
         public string UserEmail;
+        public int CurrentHistID;
         public void SetUserID(int ID)
         {
             UserID = ID;
@@ -25,5 +26,6 @@ namespace CashNCareers
         {
             return UserEmail;
         }
+
     }
 }

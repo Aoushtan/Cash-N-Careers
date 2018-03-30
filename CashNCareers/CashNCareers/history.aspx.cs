@@ -64,13 +64,19 @@ namespace CashNCareers
                                 reader.GetValues(values);
                                 al.Add(values);
                             }
+                            data = ParseData(al);
+                            return data;
                         }
-                        data = ParseData(al);
-                        return data;
+                        else
+                        {
+                            data.Add(null);
+                            return data;
+                        }
                     }
                     catch (SqlException)
                     {
-                        return null;
+                        data.Add(null);
+                        return data;
                     }
                 }
             }
@@ -110,6 +116,11 @@ namespace CashNCareers
                 }
             }
             return data;
+        }
+
+        protected void create_new_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("calc.aspx");
         }
     }
 }

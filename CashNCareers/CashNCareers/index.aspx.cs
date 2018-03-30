@@ -22,7 +22,7 @@ namespace CashNCareers.cs
             {
                 if (CheckEmail(user_email))
                 {
-                    if (!EmailExists(user_email))
+                    if (CanUseEmail(user_email))
                     {
                         if (AddUser(user_email, user_pass) != 0)
                         {
@@ -212,12 +212,12 @@ namespace CashNCareers.cs
                 return false;
             }
         }
-        protected bool EmailExists(string email)
+        protected bool CanUseEmail(string email)
         {
             string connectionString = null;
-            int num_accounts = 0;
             SqlConnection openCon;
             SqlCommand queryEmailExists;
+            SqlDataReader reader;
             connectionString = "Data Source=141.218.104.41,1433;Network=DBMSSOCN;Initial Catalog=Cash-n-CareerTeam02;User ID=Austin;Password=Lema1996";
             openCon = new SqlConnection(connectionString);
             string emailExists = "SELECT UserID FROM UserAccount WHERE Email = @email";
@@ -227,18 +227,14 @@ namespace CashNCareers.cs
                 queryEmailExists = new SqlCommand(emailExists, openCon);
                 queryEmailExists.Parameters.AddWithValue("@email", email);
                 queryEmailExists.CommandType = CommandType.Text;
-                num_accounts = queryEmailExists.ExecuteNonQuery();
-                if (num_accounts != 0)
+                reader = queryEmailExists.ExecuteReader();
+                if (reader.HasRows)
                 {
-                    queryEmailExists.Dispose();
-                    openCon.Close();
-                    return true;
+                    return false;
                 }
                 else
                 {
-                    queryEmailExists.Dispose();
-                    openCon.Close();
-                    return false;
+                    return true;
                 }
             }
             catch (SqlException e)

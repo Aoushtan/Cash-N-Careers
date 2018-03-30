@@ -36,7 +36,7 @@ th, td {
             <p>This page allows you to view or edit your previous career calculations.
             </p>
             <asp:Label ID="info" runat="server"></asp:Label>
-            <form runat="server"><asp:Button ID="create_new" Text="Create New" runat="server"></asp:Button></form>
+            <form runat="server"><asp:Button ID="create_new" Text="Create New" runat="server" OnClick="create_new_Click"></asp:Button></form>
             <table style="width:100%">
                 <tr>
                 <th>College</th>
