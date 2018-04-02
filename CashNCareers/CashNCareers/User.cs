@@ -26,6 +26,9 @@ namespace CashNCareers
         {
             return UserEmail;
         }
-
+        public void SetCurrentSituation(int ID)
+        {
+            CurrentHistID = ID;
+        }
     }
 }

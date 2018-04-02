@@ -45,7 +45,7 @@ namespace CashNCareers
             ArrayList al = new ArrayList();
             using (SqlConnection openCon = new SqlConnection("Data Source=141.218.104.41,1433;Network=DBMSSOCN;Initial Catalog=Cash-n-CareerTeam02;User ID=Austin;Password=Lema1996"))
             {
-                string getHistoryInfo = "SELECT College, CollegeCareer, CollegePay, HSJob, HSPay, DateCreated FROM UserHistory WHERE UserID = @UID";
+                string getHistoryInfo = "SELECT SessionName, College, CollegeCareer, CollegePay, HSJob, HSPay, DateCreated FROM UserHistory WHERE UserID = @UID";
                 SqlDataReader reader;
                 using (SqlCommand queryGetID = new SqlCommand(getHistoryInfo))
                 {
@@ -60,7 +60,7 @@ namespace CashNCareers
                         {
                             while (reader.Read())
                             {
-                                Object[] values = new Object[6];
+                                Object[] values = new Object[7];
                                 reader.GetValues(values);
                                 al.Add(values);
                             }
@@ -84,20 +84,23 @@ namespace CashNCareers
         protected void DisplayData(List<string> data)
         {
             int col_counter = 1;
+            int row_counter = 0;
             foreach(string item in data)
             {
                 switch (col_counter)
                 {
                     case 1:
+                        row_counter++;
                         history_div.InnerHtml += "<tr><td>" + item + "</td>";
                         break;
                     case 2:
                     case 3:
                     case 4:
                     case 5:
+                    case 6:
                         history_div.InnerHtml += "<td>" + item + "</td>";
                         break;
-                    case 6:
+                    case 7:
                         history_div.InnerHtml += "<td>" + item + "</td></tr>";
                         col_counter = 0;
                         break;
@@ -120,6 +123,7 @@ namespace CashNCareers
 
         protected void create_new_Click(object sender, EventArgs e)
         {
+            Session["User"] = user;
             Response.Redirect("calc.aspx");
         }
     }

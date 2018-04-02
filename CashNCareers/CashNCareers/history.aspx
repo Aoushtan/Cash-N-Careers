@@ -8,9 +8,6 @@
 	<meta name="description" content="">
 	<title>Cash N Careers</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css"/>
-	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript" src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
-	<script type = "text/javascript" src="js/index_logic.js"></script>
 </head>
 <style>
 table, th, td {
@@ -36,20 +33,22 @@ th, td {
             <p>This page allows you to view or edit your previous career calculations.
             </p>
             <asp:Label ID="info" runat="server"></asp:Label>
-            <form runat="server"><asp:Button ID="create_new" Text="Create New" runat="server" OnClick="create_new_Click"></asp:Button></form>
-            <table style="width:100%">
-                <tr>
-                <th>College</th>
-                <th>College Career</th>
-                <th>College Career Salary</th>
-                <th>Highschool Career</th>
-                <th>Highschool Career Salary</th>
-	            <th>Date Created</th>
-                </tr>
-                <div id="history_div" runat="server">
+            <form runat="server"><asp:Button ID="create_new" Text="Create New" runat="server" OnClick="create_new_Click"></asp:Button>
+                <table style="width:100%">
+                    <tr>
+                    <th>Situation Name</th>
+                    <th>College</th>
+                    <th>College Career</th>
+                    <th>College Career Salary</th>
+                    <th>Highschool Career</th>
+                    <th>Highschool Career Salary</th>
+	                <th>Date Created</th>
+                    </tr>
+                    <div id="history_div" runat="server">
 
-                </div>
-            </table>
+                    </div>
+                </table>
+            </form>
          </center>
     </div>
 </body>

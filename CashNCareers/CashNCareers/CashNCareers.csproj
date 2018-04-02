@@ -69,6 +69,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="calc.aspx" />
     <Content Include="CNC.xlsm" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
@@ -89,6 +90,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="calc.aspx.cs">
+      <DependentUpon>calc.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="calc.aspx.designer.cs">
+      <DependentUpon>calc.aspx</DependentUpon>
+    </Compile>
     <Compile Include="User.cs" />
     <Compile Include="history.aspx.cs">
       <DependentUpon>history.aspx</DependentUpon>
