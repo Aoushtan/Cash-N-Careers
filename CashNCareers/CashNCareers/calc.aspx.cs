@@ -2,6 +2,8 @@
 using System;
 using System.Data.SqlClient;
 using System.Data;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace CashNCareers
 {
@@ -9,6 +11,9 @@ namespace CashNCareers
     {
         User user;
         static string path = "C:\\CNC\\CNC.xlsm";
+        int currentID;
+        bool editing;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -17,6 +22,12 @@ namespace CashNCareers
                 if (user.UserID == -1)
                 {
                     Response.Redirect("index.aspx");
+                }
+                if (user.CurrentHistID != -1)
+                {
+                    GetHistoryData();
+                    DropOldRecord();
+                    user.SetCurrentSituation(-1);
                 }
             }
             catch (Exception)
@@ -118,15 +129,16 @@ namespace CashNCareers
         protected void save_senario_Click(object sender, EventArgs e)
         {
             string connectionString = null;
+            string saveScenario;
             SqlConnection openCon;
             SqlCommand querySaveScenario;
             connectionString = "Data Source=141.218.104.41,1433;Network=DBMSSOCN;Initial Catalog=Cash-n-CareerTeam02;User ID=Austin;Password=Lema1996";
             openCon = new SqlConnection(connectionString);
-            string saveScenario = "INSERT INTO UserHistory (UserID, CollegeCareer, HSJob, College, CollegePay, HSPay, PartTimeWork, Gifts, Scholarships," +
-                "Tuition, StudentLoan, Savings, MonthlyPayment, CollegeMonthlyRaw, CollegeInitialMonthlyRaw, CollegeLifetimeDiscretionary, CollegeNPV, "+
-                "HSMonthlyRaw, HSInitialMonthlyRaw, HSLifetimeDiscretionary, HSNPV, DifferenceMonthly, DifferenceInitialMonthly, DifferenceLifetime, DifferenceNPV," +
-                "DateCreated, SessionName) VALUES (@UID, @ColCareer, @HsJob, @College, @ColSalary, @HsSalary, @PartTime, @Gifts, @Scholarships, @Tuition, @StudentLoan,"+
-                "@Savings, @MonthlyPay, @ColMR, @ColIMR, @ColLD, @ColNPV, @HsMR, @HsIMR, @HsLD, @HsNPV, @DifM, @DifIM, @DifL, @DifNPV, @Date, @Session)";
+            saveScenario = "INSERT INTO UserHistory (UserID, CollegeCareer, HSJob, College, CollegePay, HSPay, PartTimeWork, Gifts, Scholarships," +
+            "Tuition, StudentLoan, Savings, MonthlyPayment, CollegeMonthlyRaw, CollegeInitialMonthlyRaw, CollegeLifetimeDiscretionary, CollegeNPV, " +
+            "HSMonthlyRaw, HSInitialMonthlyRaw, HSLifetimeDiscretionary, HSNPV, DifferenceMonthly, DifferenceInitialMonthly, DifferenceLifetime, DifferenceNPV," +
+            "DateCreated, SessionName) VALUES (@UID, @ColCareer, @HsJob, @College, @ColSalary, @HsSalary, @PartTime, @Gifts, @Scholarships, @Tuition, @StudentLoan," +
+            "@Savings, @MonthlyPay, @ColMR, @ColIMR, @ColLD, @ColNPV, @HsMR, @HsIMR, @HsLD, @HsNPV, @DifM, @DifIM, @DifL, @DifNPV, @Date, @Session)";
             try
             {
                 openCon.Open();
@@ -164,6 +176,112 @@ namespace CashNCareers
                 openCon.Close();
                 Session["User"] = user;
                 Response.Redirect("history.aspx");
+            }
+            catch (SqlException error)
+            {
+                openCon.Close();
+                err_message.Text = error.Message;
+            }
+        }
+        protected void GetHistoryData()
+        {
+            string connectionString = null;
+            SqlConnection openCon;
+            SqlCommand queryHistoryData;
+            SqlDataReader reader;
+            ArrayList list = new ArrayList();
+            List<string> data = new List<string>();
+            connectionString = "Data Source=141.218.104.41,1433;Network=DBMSSOCN;Initial Catalog=Cash-n-CareerTeam02;User ID=Austin;Password=Lema1996";
+            openCon = new SqlConnection(connectionString);
+            string saveScenario = "SELECT * FROM UserHistory WHERE UserID = @UID AND HistID = @HID";
+            try
+            {
+                openCon.Open();
+                queryHistoryData = new SqlCommand(saveScenario, openCon);
+                queryHistoryData.Parameters.AddWithValue("@UID", user.GetUserID());
+                queryHistoryData.Parameters.AddWithValue("@HID", user.CurrentHistID);
+                queryHistoryData.CommandType = CommandType.Text;
+                reader = queryHistoryData.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Object[] values = new Object[28]; //28 refers to the number of columns in the UserHistory table
+                        reader.GetValues(values);
+                        list.Add(values);
+                    }
+                    data = ParseData(list);
+                    DisplayHistory(data);
+                }
+                queryHistoryData.Dispose();
+                openCon.Close();
+            }
+            catch (SqlException error)
+            {
+                openCon.Close();
+                err_message.Text = error.Message;
+            }
+        }
+        protected List<string> ParseData(ArrayList list)
+        {
+            List<string> data = new List<string>();
+            foreach (Object[] row in list)
+            {
+                foreach (object col in row)
+                {
+                    data.Add(col.ToString());
+                }
+            }
+            return data;
+        }
+        protected void DisplayHistory(List<string> data)
+        {
+            //skip 1 and 2 since they are not displayed
+            In_ColCareer.Text = data[2];
+            In_HsCareer.Text = data[3];
+            In_College.Text = data[4];
+            In_ColSalary.Text = data[5];
+            In_HsSalary.Text = data[6];
+            In_PartTimeWork.Text = data[7];
+            In_Gifts.Text = data[8];
+            In_Scholarships.Text = data[9];
+            In_Tuition.Text = data[10];
+            Out_StudentLoan.Text = data[11];
+            Out_Savings.Text = data[12];
+            Out_MonthlyPayment.Text = data[13];
+            Out_ColMonthlyRaw.Text = data[14];
+            Out_ColInitDisc.Text = data[15];
+            Out_ColLifetimeDisc.Text = data[16];
+            Out_ColLifetimeNPV.Text = data[17];
+            Out_HsMonthlyRaw.Text = data[18];
+            Out_HsInitDisc.Text = data[19];
+            Out_HsLifetimeDisc.Text = data[20];
+            Out_HsLifetimeNPV.Text = data[21];
+            Out_DiffMonthlyRaw.Text = data[22];
+            Out_DiffInitDisc.Text = data[23];
+            Out_DiffLifetimeDisc.Text = data[24];
+            Out_DiffLifetimeNPV.Text = data[25];
+            //Skip 27 because it isn't being displayed
+            In_ScenarioName.Text = data[27];
+        }
+        protected void DropOldRecord()
+        {
+            string connectionString = null;
+            string deleteRecord;
+            SqlConnection openCon;
+            SqlCommand queryDeleteRecord;
+            connectionString = "Data Source=141.218.104.41,1433;Network=DBMSSOCN;Initial Catalog=Cash-n-CareerTeam02;User ID=Austin;Password=Lema1996";
+            openCon = new SqlConnection(connectionString);
+            deleteRecord = "DELETE FROM UserHistory WHERE HistID = @HID";
+            try
+            {
+                openCon.Open();
+                queryDeleteRecord = new SqlCommand(deleteRecord, openCon);
+                queryDeleteRecord.Parameters.AddWithValue("@HID", user.CurrentHistID);
+                queryDeleteRecord.CommandType = CommandType.Text;
+                queryDeleteRecord.ExecuteNonQuery();
+                queryDeleteRecord.Dispose();
+                openCon.Close();
             }
             catch (SqlException error)
             {

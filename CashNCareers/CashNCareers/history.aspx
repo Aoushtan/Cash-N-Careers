@@ -36,6 +36,7 @@ th, td {
             <form runat="server"><asp:Button ID="create_new" Text="Create New" runat="server" OnClick="create_new_Click"></asp:Button>
                 <table style="width:100%">
                     <tr>
+                    <th>Edit</th>
                     <th>Situation Name</th>
                     <th>College</th>
                     <th>College Career</th>
@@ -46,8 +47,11 @@ th, td {
                     </tr>
                     <div id="history_div" runat="server">
 
+
                     </div>
                 </table>
+                <br /><br />
+                <asp:Button id="edit_btn" runat="server" Text="Edit Scenario" OnClick="edit_btn_Click" />
             </form>
          </center>
     </div>

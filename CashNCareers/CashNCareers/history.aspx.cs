@@ -12,8 +12,10 @@ namespace CashNCareers
 {
     public partial class history : System.Web.UI.Page
     {
+        //Class scope variables
         User user;
-        List<string> user_data = new List<string>();
+        List<string> user_data = new List<string>(); //List of strings to hold user data
+        List<string> historyID = new List<string>(); //List of identifiers for each row of history data
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -30,7 +32,13 @@ namespace CashNCareers
                 {
                     info.Text = "No previous data found, please press create new to begin.";
                 }
-                DisplayData(user_data);
+                else
+                {
+                    if(Session["first_load"] == null)
+                    {
+                        DisplayData(user_data);
+                    }
+                }
             }
             catch (Exception error)
             {
@@ -45,7 +53,7 @@ namespace CashNCareers
             ArrayList al = new ArrayList();
             using (SqlConnection openCon = new SqlConnection("Data Source=141.218.104.41,1433;Network=DBMSSOCN;Initial Catalog=Cash-n-CareerTeam02;User ID=Austin;Password=Lema1996"))
             {
-                string getHistoryInfo = "SELECT SessionName, College, CollegeCareer, CollegePay, HSJob, HSPay, DateCreated FROM UserHistory WHERE UserID = @UID";
+                string getHistoryInfo = "SELECT HistID, SessionName, College, CollegeCareer, CollegePay, HSJob, HSPay, DateCreated FROM UserHistory WHERE UserID = @UID";
                 SqlDataReader reader;
                 using (SqlCommand queryGetID = new SqlCommand(getHistoryInfo))
                 {
@@ -60,7 +68,7 @@ namespace CashNCareers
                         {
                             while (reader.Read())
                             {
-                                Object[] values = new Object[7];
+                                Object[] values = new Object[8];
                                 reader.GetValues(values);
                                 al.Add(values);
                             }
@@ -90,23 +98,26 @@ namespace CashNCareers
                 switch (col_counter)
                 {
                     case 1:
-                        row_counter++;
-                        history_div.InnerHtml += "<tr><td>" + item + "</td>";
+                        history_div.InnerHtml += "<tr><td><input type='radio' id='hist_" + row_counter + "' name='history_edits' value='" + row_counter + "'></td>";
+                        historyID.Add(item);
                         break;
                     case 2:
                     case 3:
                     case 4:
                     case 5:
                     case 6:
+                    case 7:
                         history_div.InnerHtml += "<td>" + item + "</td>";
                         break;
-                    case 7:
+                    case 8:
                         history_div.InnerHtml += "<td>" + item + "</td></tr>";
                         col_counter = 0;
+                        row_counter++;
                         break;
                 }
                 col_counter++;
             }
+            Session["first_load"] = false;
         }
         protected List<string> ParseData(ArrayList list)
         {
@@ -125,6 +136,22 @@ namespace CashNCareers
         {
             Session["User"] = user;
             Response.Redirect("calc.aspx");
+        }
+
+        protected void edit_btn_Click(object sender, EventArgs e)
+        {
+            if(Request.Form["history_edits"] != null)
+            {
+                int selected_radio = int.Parse(Request.Form["history_edits"]);
+                int histID = int.Parse(historyID[selected_radio]);
+                user.SetCurrentSituation(histID);
+                Session["User"] = user;
+                Response.Redirect("calc.aspx");
+            }
+            else
+            {
+                info.Text = "You must select a scenario to edit.";
+            }
         }
     }
 }
