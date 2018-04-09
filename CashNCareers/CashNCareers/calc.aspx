@@ -28,23 +28,25 @@
 
                     All fields are required.
                     </p>
-
+                    <br />
+                    <asp:Label ID="mode_message" Text="" runat="server"></asp:Label><br />
                     <form runat="server">
+                        <asp:Button ID="basic_mode" runat="server" Text="Basic Mode" OnClick="basic_mode_Click"/><asp:Button ID="advanced_mode" runat="server" Text="Advanced Mode" OnClick="advanced_mode_Click"/><br /><br />
                         <asp:Label ID="err_message" runat="server" Text=""></asp:Label><br />
                         Name Scenario: <asp:TextBox ID="In_ScenarioName" runat="server" placeholder="Name the current scenario" ToolTip="Enter the name of the current scenario."></asp:TextBox><br /><br />
 					    <h3>College Education</h3>
-					    College: <asp:TextBox ID="In_College" runat="server" placeholder="Enter College" ToolTip="Enter the name of the college you wish to attend here."></asp:TextBox><br>
-                        Tuition: <asp:TextBox ID="In_Tuition" runat="server" placeholder="Enter tuition cost" ToolTip="Enter the amount in dollars that tuition costs for a single year."></asp:TextBox><br>
+					    College: <asp:TextBox ID="In_College" runat="server" placeholder="Enter College" ToolTip="Enter the name of the college you wish to attend here." Visible="false"></asp:TextBox><asp:DropDownList ID="SchoolList" AutoPostBack="true" OnSelectedIndexChanged="School_Change" runat="server" visible="false"/><br>
+                        Tuition: <asp:TextBox ID="In_Tuition" runat="server" placeholder="Enter tuition cost" ToolTip="Enter the amount in dollars that tuition costs for a single year." Visible="false"></asp:TextBox><asp:Label ID="SchoolTuition" runat="server" Text="" Visible="false"></asp:Label><br>
                         Scholarships: <asp:TextBox ID="In_Scholarships" runat="server" placeholder="Enter scholarship amount" ToolTip="Enter the total amount in dollars of scholarships recieved per year."></asp:TextBox><br>
                         Part-Time Income: <asp:TextBox ID="In_PartTimeWork" runat="server" placeholder="Enter yearly income during schooling" ToolTip="Enter the total yearly income of part-time work in dollars."></asp:TextBox><br>
                         Gifts: <asp:TextBox ID="In_Gifts" runat="server" placeholder="Enter amount in dollars of gifts recieved" ToolTip="Enter the total amount in dollars of any gifts recieved."></asp:TextBox><br>
-                        Career: <asp:TextBox ID="In_ColCareer" runat="server" placeholder="Enter name of after college career" ToolTip="Enter the name of the career you will be working after graduating from college."></asp:TextBox><br>
-					    Salary: <asp:TextBox ID="In_ColSalary" runat="server" placeholder="Enter the yearly salary of chosen career" ToolTip="Enter the yearly salary for the career you have chosen."></asp:TextBox><br>
+                        Career: <asp:TextBox ID="In_ColCareer" runat="server" placeholder="Enter name of after college career" ToolTip="Enter the name of the career you will be working after graduating from college." Visible="false"></asp:TextBox><asp:DropDownList ID="JobList" AutoPostBack="true" OnSelectedIndexChanged="Job_Change_Col" runat="server" Visible="false" /><br>
+					    Salary: <asp:TextBox ID="In_ColSalary" runat="server" placeholder="Enter the yearly salary of chosen career" ToolTip="Enter the yearly salary for the career you have chosen." Visible="false"></asp:TextBox><asp:Label ID="JobSalary" runat="server" Text="" Visible="false" /><br>
 					    <br>
 
                         <h3>High School Education</h3>
-                        Job Title: <asp:TextBox ID="In_HsCareer" runat="server" placeholder="Enter the name of after high school career" ToolTip="Enter the name of the career you would choose to do right after high school."></asp:TextBox><br>
-                        Yearly Income: <asp:TextBox ID="In_HsSalary" runat="server" placeholder="Enter the yearly salary of chosen career" ToolTip="Enter the yearly income for the career you have chosen."></asp:TextBox><br>
+                        Job Title: <asp:TextBox ID="In_HsCareer" runat="server" placeholder="Enter the name of after high school career" ToolTip="Enter the name of the career you would choose to do right after high school." visible="false"></asp:TextBox><asp:DropDownList ID="JobList_HS" AutoPostBack="true" OnSelectedIndexChanged="Job_Change_HS" runat="server" Visible="false" /><br>
+                        Yearly Income: <asp:TextBox ID="In_HsSalary" runat="server" placeholder="Enter the yearly salary of chosen career" ToolTip="Enter the yearly income for the career you have chosen." Visible="false"></asp:TextBox><asp:Label ID="JobSalary_HS" runat="server" Text="" Visible="false" /><br>
 
                         <asp:Button ID="calculate" Text="Calculate" runat="server" OnClick="calculate_Click"/>
 
@@ -66,7 +68,7 @@
                         Lifetime Net Present Value Difference: <asp:Label ID="Out_DiffLifetimeNPV" runat="server" Text=""></asp:Label><br>
                         <br />
                         <asp:Button ID="save_senario" runat="server" Text="Save Scenario" OnClick="save_senario_Click"/>
-                        <br />
+                        <br /><br /><br />
                     </form>
 				</center>
 			</div>

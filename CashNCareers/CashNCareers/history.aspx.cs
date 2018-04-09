@@ -15,7 +15,7 @@ namespace CashNCareers
         //Class scope variables
         User user;
         List<string> user_data = new List<string>(); //List of strings to hold user data
-        List<string> historyID = new List<string>(); //List of identifiers for each row of history data
+        static List<string> historyID = new List<string>(); //List of identifiers for each row of history data
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -34,7 +34,7 @@ namespace CashNCareers
                 }
                 else
                 {
-                    if(Session["first_load"] == null)
+                    if(!IsPostBack)
                     {
                         DisplayData(user_data);
                     }
@@ -117,7 +117,6 @@ namespace CashNCareers
                 }
                 col_counter++;
             }
-            Session["first_load"] = false;
         }
         protected List<string> ParseData(ArrayList list)
         {

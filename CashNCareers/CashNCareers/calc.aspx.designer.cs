@@ -13,6 +13,33 @@ namespace CashNCareers {
     public partial class calc {
         
         /// <summary>
+        /// mode_message control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label mode_message;
+        
+        /// <summary>
+        /// basic_mode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button basic_mode;
+        
+        /// <summary>
+        /// advanced_mode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button advanced_mode;
+        
+        /// <summary>
         /// err_message control.
         /// </summary>
         /// <remarks>
@@ -40,6 +67,15 @@ namespace CashNCareers {
         protected global::System.Web.UI.WebControls.TextBox In_College;
         
         /// <summary>
+        /// SchoolList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList SchoolList;
+        
+        /// <summary>
         /// In_Tuition control.
         /// </summary>
         /// <remarks>
@@ -47,6 +83,15 @@ namespace CashNCareers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox In_Tuition;
+        
+        /// <summary>
+        /// SchoolTuition control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label SchoolTuition;
         
         /// <summary>
         /// In_Scholarships control.
@@ -85,6 +130,15 @@ namespace CashNCareers {
         protected global::System.Web.UI.WebControls.TextBox In_ColCareer;
         
         /// <summary>
+        /// JobList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList JobList;
+        
+        /// <summary>
         /// In_ColSalary control.
         /// </summary>
         /// <remarks>
@@ -92,6 +146,15 @@ namespace CashNCareers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox In_ColSalary;
+        
+        /// <summary>
+        /// JobSalary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label JobSalary;
         
         /// <summary>
         /// In_HsCareer control.
@@ -103,6 +166,15 @@ namespace CashNCareers {
         protected global::System.Web.UI.WebControls.TextBox In_HsCareer;
         
         /// <summary>
+        /// JobList_HS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList JobList_HS;
+        
+        /// <summary>
         /// In_HsSalary control.
         /// </summary>
         /// <remarks>
@@ -110,6 +182,15 @@ namespace CashNCareers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox In_HsSalary;
+        
+        /// <summary>
+        /// JobSalary_HS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label JobSalary_HS;
         
         /// <summary>
         /// calculate control.
