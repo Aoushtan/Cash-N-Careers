@@ -17,7 +17,7 @@
 				<center><h1 id="title">Cash N Careers</h1></center>
 				<hr>
 			</div>
-			<div id="body">
+			<div id="body" >
 				<center>
 					<p><b>Welcome to the Cash and Careers financial comparison application.
 					</b></p>
@@ -28,50 +28,91 @@
             when finished to compare your results.
           </p>
 
-
 					<h3>College Education</h3>
-					College: <input type="text" placeholder="Enter the College" id="col_name"/><br>
-          Tuition: <input type="text" placeholder="Enter your Tuition Cost" id="tuition"/><br>
-          Scholarships: <input type="text" placeholder="Enter your estimated Scholarships" id="gifts"/><br>
-          Part-Time Income: <input type="text" placeholder="Enter your income yearly" id="part_time"/><br>
-          Gifts: <input type="text" placeholder="Enter your estimated gifts" id="gifts"/><br>
-          Career: <input type="text" placeholder="Enter your yearly income" id="col_career"/><br>
-					Salary: <input type="text" placeholder="Enter your Salary after College" id="col_pay"/><br>
+
+					<div style="text-align: center;">
+    				<div style="display: inline-block; text-align: left;">
+						College: <input type="text" placeholder="Enter the name of College" id="col_name" style="width: 242px;"/><br>
+	          Tuition: <input type="text" placeholder="Enter your Tuition Cost" id="tuition" style="width: 250px;"/><br>
+	          Scholarships: <input type="text" placeholder="Enter your Scholarships" id="gifts" style="width: 201px;"/><br>
+	          Yearly Income: <input type="text" placeholder="Enter your yearly income" id="part_time" style="width: 191px;"/><br>
+	          Gifts: <input type="text" placeholder="Enter your estimated gifts" id="gifts" style="width: 263px;"/><br>
+	          Career: <input type="text" placeholder="Enter your yearly income" id="col_career" style="width: 245px;"/><br>
+						Salary: <input type="text" placeholder="Enter your Salary after College" id="col_pay" style="width: 250px;"/><br>
+					</div>
+				</div>
 
 					<br>
 
 
         <center>
         <h3>High School Education</h3>
-        Job Title: <input type="text" placeholder="Enter your yearly income" id="hs_career"/><br>
-        Yearly Income: <input type="text" placeholder="Enter your yearly income" id="hs_pay"/><br>
+
+				<div style="text-align: center;">
+					<div style="display: inline-block; text-align: left;">
+        Job Title: <input type="text" placeholder="Enter your chosen career path" id="hs_career" style="width: 235px;"/><br>
+        Yearly Income: <input type="text" placeholder="Enter your yearly income" id="hs_pay" style="width: 192px;"/><br>
+					</div>
+				</div>
 
         <span id="error_message_reg"></span><br>
         <button id="Calculate">Calculate</button>
 
-        <h3>Results</h3>
-        Student Loans:<br>
-        Savings:<br>
-        Loan Balance:<br>
-        Monthly Payment:<br>
-        College Monthly Raw Dollar Value:<br>
-        College Initial Monthly Discrectionary:<br>
-        College Lifetime Discrectionary:<br>
-        College Lifetime Net Present Value:<br>
-        Higschool Monthly Raw Dollar Value:<br>
-        Higschool Initial Monthly Discrectionary:<br>
-        Higschool Lifetime Discrectionary:<br>
-        Higschool Lifetime Net Present Value:<br>
-        Monthly Raw Dollar Value Difference:<br>
-        Initial Monthly Discrectionary Difference:<br>
-        Lifetime Discrectionary Difference:<br>
-        Lifetime Net Present Value Difference:<br>
+        <h3><u>Results</u></h3>
 
+				<div style="text-align: center;">
+					<div style="display: inline-block; text-align: left;">
+						<b>Student Loans: <asp:Label ID="Out_StudentLoan" runat="server" Text=""></asp:Label></b><br>
+						<b>Monthly Payment: <asp:Label ID="Out_MonthlyPayment" runat="server" Text=""></asp:Label></b><br>
+						<b>Highschool Savings: <asp:Label ID="Out_Savings" runat="server" Text=""></asp:Label></b><br>
+					</div>
+				</div>
 
+				<head>
+				<style>
+				table, th, td {
+				    border: 1px solid black;
+				    border-collapse: collapse;
+				}
+				th, td {
+				    padding: 5px;
+				    text-align: left;
+				}
+				</style>
+				</head>
+
+				<table style="width:75%">
+			  <tr>
+			  	<th></th>
+			    <th>Monthly Raw Dollar Value</th>
+			    <th>Initial Monthly Discretionary</th>
+			    <th>Lifetime Discretionary</th>
+			    <th>Lifetime NPV</th>
+			  </tr>
+			  <tr>
+			    <th>College</th>
+			    <td><asp:Label ID="Out_ColMonthlyRaw" runat="server" Text=""></asp:Label></td>
+					<td><asp:Label ID="Out_ColInitDisc" runat="server" Text=""></asp:Label></td>
+					<td><asp:Label ID="Out_ColLifetimeDisc" runat="server" Text=""></asp:Label></td>
+					<td><asp:Label ID="Out_ColLifetimeNPV" runat="server" Text=""></asp:Label></td>
+			  </tr>
+			  <tr>
+			    <th>Highschool</th>
+			    <td><asp:Label ID="Out_HsMonthlyRaw" runat="server" Text=""></asp:Label></td>
+			    <td><asp:Label ID="Out_HsInitDisc" runat="server" Text=""></asp:Label></td>
+					<td><asp:Label ID="Out_HsLifetimeDisc" runat="server" Text=""></asp:Label></td>
+					<td><asp:Label ID="Out_HsLifetimeNPV" runat="server" Text=""></asp:Label></td>
+			  </tr>
+			  <tr>
+			    <th>Difference</th>
+			    <td><asp:Label ID="Out_DiffMonthlyRaw" runat="server" Text=""></asp:Label></td>
+			    <td><asp:Label ID="Out_DiffInitDisc" runat="server" Text=""></asp:Label></td>
+					<td><asp:Label ID="Out_DiffLifetimeDisc" runat="server" Text=""></asp:Label></td>
+			    <td><asp:Label ID="Out_DiffLifetimeNPV" runat="server" Text=""></asp:Label></td>
+			  </tr>
+				</table>
 
         <br>
-
-
 
 				<br><br>
 				<span id="test"></span>
