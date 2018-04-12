@@ -8,6 +8,16 @@
 		<meta name="description" content="">
 		<title>Cash N Careers</title>
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+             <style>
+				table, th, td {
+				    border: 1px solid black;
+				    border-collapse: collapse;
+				}
+				th, td {
+				    padding: 5px;
+				    text-align: left;
+				}
+				</style>
 	</head>
 	<body>
 		<div id="container">
@@ -50,22 +60,48 @@
 
                         <asp:Button ID="calculate" Text="Calculate" runat="server" OnClick="calculate_Click"/>
 
-                        <h3>Results</h3>
-                        Student Loans: <asp:Label ID="Out_StudentLoan" runat="server" Text=""></asp:Label><br>
-                        Savings: <asp:Label ID="Out_Savings" runat="server" Text=""></asp:Label><br>
-                        Monthly Payment: <asp:Label ID="Out_MonthlyPayment" runat="server" Text=""></asp:Label><br>
-                        College Monthly Raw Dollar Value: <asp:Label ID="Out_ColMonthlyRaw" runat="server" Text=""></asp:Label><br>
-                        College Initial Monthly Discrectionary: <asp:Label ID="Out_ColInitDisc" runat="server" Text=""></asp:Label><br>
-                        College Lifetime Discrectionary: <asp:Label ID="Out_ColLifetimeDisc" runat="server" Text=""></asp:Label><br>
-                        College Lifetime Net Present Value: <asp:Label ID="Out_ColLifetimeNPV" runat="server" Text=""></asp:Label><br>
-                        Higschool Monthly Raw Dollar Value: <asp:Label ID="Out_HsMonthlyRaw" runat="server" Text=""></asp:Label><br>
-                        Higschool Initial Monthly Discrectionary: <asp:Label ID="Out_HsInitDisc" runat="server" Text=""></asp:Label><br>
-                        Higschool Lifetime Discrectionary: <asp:Label ID="Out_HsLifetimeDisc" runat="server" Text=""></asp:Label><br>
-                        Higschool Lifetime Net Present Value: <asp:Label ID="Out_HsLifetimeNPV" runat="server" Text=""></asp:Label><br>
-                        Monthly Raw Dollar Value Difference: <asp:Label ID="Out_DiffMonthlyRaw" runat="server" Text=""></asp:Label><br>
-                        Initial Monthly Discrectionary Difference: <asp:Label ID="Out_DiffInitDisc" runat="server" Text=""></asp:Label><br>
-                        Lifetime Discrectionary Difference: <asp:Label ID="Out_DiffLifetimeDisc" runat="server" Text=""></asp:Label><br>
-                        Lifetime Net Present Value Difference: <asp:Label ID="Out_DiffLifetimeNPV" runat="server" Text=""></asp:Label><br>
+                        <h3><u>Results</u></h3>
+
+				<div style="text-align: center;">
+					<div style="display: inline-block; text-align: left;">
+						<b>Student Loans: <asp:Label ID="Out_StudentLoan" runat="server" Text=""></asp:Label></b><br>
+						<b>Monthly Payment: <asp:Label ID="Out_MonthlyPayment" runat="server" Text=""></asp:Label></b><br>
+						<b>Highschool Savings: <asp:Label ID="Out_Savings" runat="server" Text=""></asp:Label></b><br>
+					</div>
+				</div>
+
+				
+
+				<table style="width:75%">
+			  <tr>
+			  	<th></th>
+			    <th>Monthly Raw Dollar Value</th>
+			    <th>Initial Monthly Discretionary</th>
+			    <th>Lifetime Discretionary</th>
+			    <th>Lifetime NPV</th>
+			  </tr>
+			  <tr>
+			    <th>College</th>
+			    <td><asp:Label ID="Out_ColMonthlyRaw" runat="server" Text=""></asp:Label></td>
+					<td><asp:Label ID="Out_ColInitDisc" runat="server" Text=""></asp:Label></td>
+					<td><asp:Label ID="Out_ColLifetimeDisc" runat="server" Text=""></asp:Label></td>
+					<td><asp:Label ID="Out_ColLifetimeNPV" runat="server" Text=""></asp:Label></td>
+			  </tr>
+			  <tr>
+			    <th>Highschool</th>
+			    <td><asp:Label ID="Out_HsMonthlyRaw" runat="server" Text=""></asp:Label></td>
+			    <td><asp:Label ID="Out_HsInitDisc" runat="server" Text=""></asp:Label></td>
+					<td><asp:Label ID="Out_HsLifetimeDisc" runat="server" Text=""></asp:Label></td>
+					<td><asp:Label ID="Out_HsLifetimeNPV" runat="server" Text=""></asp:Label></td>
+			  </tr>
+			  <tr>
+			    <th>Difference</th>
+			    <td><asp:Label ID="Out_DiffMonthlyRaw" runat="server" Text=""></asp:Label></td>
+			    <td><asp:Label ID="Out_DiffInitDisc" runat="server" Text=""></asp:Label></td>
+					<td><asp:Label ID="Out_DiffLifetimeDisc" runat="server" Text=""></asp:Label></td>
+			    <td><asp:Label ID="Out_DiffLifetimeNPV" runat="server" Text=""></asp:Label></td>
+			  </tr>
+				</table>
                         <br />
                         <asp:Button ID="save_senario" runat="server" Text="Save Scenario" OnClick="save_senario_Click"/>
                         <br /><br /><br />

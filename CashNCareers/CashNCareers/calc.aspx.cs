@@ -32,7 +32,6 @@ namespace CashNCareers
                 {
                     LoadBasicMode();
                     basic_mode_Click(basic_mode, EventArgs.Empty);
-                    err_message.Text = "Jobs " + job_titles.Count + ", Salaries " + job_salary.Count + ", Schools " + school_name.Count + ", Tuitions " + school_tuition.Count + ".";
 
                 }
                 //Could potentially change this whole system for history editing by using if(!IsPostBack) here, which does something only on page load rather than refresh, but keep this for now.
@@ -100,7 +99,7 @@ namespace CashNCareers
             Application excelApp = new Application();
             excelApp.Visible = true;
             Workbook workBook = excelApp.Workbooks.Open(path);
-            Worksheet workSheet = workBook.Sheets["InsertedValues"];
+            Worksheet workSheet = workBook.Sheets["Career Comparison"];
             //Get required user data
             int tuition;
             int col_salary;
@@ -123,29 +122,29 @@ namespace CashNCareers
             
 
             //Send values to the excel cells
-            workSheet.Cells[4, "B"] = col_salary;
-            workSheet.Cells[5, "B"] = hs_salary;
-            workSheet.Cells[6, "B"] = part_time;
-            workSheet.Cells[7, "B"] = gifts;
-            workSheet.Cells[8, "B"] = scholarships;
-            workSheet.Cells[9, "B"] = tuition;
+            workSheet.Cells[15, "C"] = col_salary;
+            workSheet.Cells[15, "F"] = hs_salary;
+            workSheet.Cells[20, "C"] = part_time;
+            workSheet.Cells[20, "D"] = gifts;
+            workSheet.Cells[20, "E"] = scholarships;
+            workSheet.Cells[20, "F"] = tuition;
 
             //Read values from excel
-            string student_loan = (workSheet.Cells[10, "B"] as Range).Value.ToString();
-            string savings = (workSheet.Cells[11, "B"] as Range).Value.ToString();
-            string monthly_payment = (workSheet.Cells[13, "B"] as Range).Value.ToString();
-            string col_monthly_raw = (workSheet.Cells[14, "B"] as Range).Value.ToString();
-            string col_init_monthly_disc = (workSheet.Cells[15, "B"] as Range).Value.ToString();
-            string col_lifetime_disc = (workSheet.Cells[16, "B"] as Range).Value.ToString();
-            string col_NPV = (workSheet.Cells[17, "B"] as Range).Value.ToString();
-            string hs_monthly_raw = (workSheet.Cells[18, "B"] as Range).Value.ToString();
-            string hs_init_monthly_disc = (workSheet.Cells[19, "B"] as Range).Value.ToString();
-            string hs_lifetime_disc = (workSheet.Cells[20, "B"] as Range).Value.ToString();
-            string hs_NPV = (workSheet.Cells[21, "B"] as Range).Value.ToString();
-            string diff_monthly = (workSheet.Cells[22, "B"] as Range).Value.ToString();
-            string diff_init_monthly = (workSheet.Cells[23, "B"] as Range).Value.ToString();
-            string diff_lifetime = (workSheet.Cells[24, "B"] as Range).Value.ToString();
-            string diff_NPV = (workSheet.Cells[25, "B"] as Range).Value.ToString();
+            string student_loan = Math.Round((workSheet.Cells[24, "C"] as Range).Value).ToString();
+            string savings = Math.Round((workSheet.Cells[24, "F"] as Range).Value).ToString();
+            string monthly_payment = Math.Round((workSheet.Cells[28, "F"] as Range).Value).ToString();
+            string col_monthly_raw = Math.Round((workSheet.Cells[31, "D"] as Range).Value).ToString();
+            string col_init_monthly_disc = Math.Round((workSheet.Cells[31, "E"] as Range).Value).ToString();
+            string col_lifetime_disc = Math.Round((workSheet.Cells[31, "F"] as Range).Value).ToString();
+            string col_NPV = Math.Round((workSheet.Cells[31, "G"] as Range).Value).ToString();
+            string hs_monthly_raw = Math.Round((workSheet.Cells[32, "D"] as Range).Value).ToString();
+            string hs_init_monthly_disc = Math.Round((workSheet.Cells[32, "E"] as Range).Value).ToString();
+            string hs_lifetime_disc = Math.Round((workSheet.Cells[32, "F"] as Range).Value).ToString();
+            string hs_NPV = Math.Round((workSheet.Cells[32, "G"] as Range).Value).ToString();
+            string diff_monthly = Math.Round((workSheet.Cells[34, "D"] as Range).Value).ToString();
+            string diff_init_monthly = Math.Round((workSheet.Cells[34, "E"] as Range).Value).ToString();
+            string diff_lifetime = Math.Round((workSheet.Cells[34, "F"] as Range).Value).ToString();
+            string diff_NPV = Math.Round((workSheet.Cells[34, "G"] as Range).Value).ToString();
 
             //Display data
             Out_StudentLoan.Text = student_loan;
@@ -179,69 +178,77 @@ namespace CashNCareers
 
         protected void save_senario_Click(object sender, EventArgs e)
         {
-            string saveScenario;
-            SqlCommand querySaveScenario;
-            openCon = new SqlConnection(connectionString);
-            saveScenario = "INSERT INTO UserHistory (UserID, CollegeCareer, HSJob, College, CollegePay, HSPay, PartTimeWork, Gifts, Scholarships," +
-            "Tuition, StudentLoan, Savings, MonthlyPayment, CollegeMonthlyRaw, CollegeInitialMonthlyRaw, CollegeLifetimeDiscretionary, CollegeNPV, " +
-            "HSMonthlyRaw, HSInitialMonthlyRaw, HSLifetimeDiscretionary, HSNPV, DifferenceMonthly, DifferenceInitialMonthly, DifferenceLifetime, DifferenceNPV," +
-            "DateCreated, SessionName) VALUES (@UID, @ColCareer, @HsJob, @College, @ColSalary, @HsSalary, @PartTime, @Gifts, @Scholarships, @Tuition, @StudentLoan," +
-            "@Savings, @MonthlyPay, @ColMR, @ColIMR, @ColLD, @ColNPV, @HsMR, @HsIMR, @HsLD, @HsNPV, @DifM, @DifIM, @DifL, @DifNPV, @Date, @Session)";
-            try
+            if (ValidateInputs())
             {
-                openCon.Open();
-                querySaveScenario = new SqlCommand(saveScenario, openCon);
-                querySaveScenario.Parameters.AddWithValue("@UID", user.GetUserID());
-                querySaveScenario.Parameters.AddWithValue("@PartTime", int.Parse(In_PartTimeWork.Text));
-                querySaveScenario.Parameters.AddWithValue("@Gifts", int.Parse(In_Gifts.Text));
-                querySaveScenario.Parameters.AddWithValue("@Scholarships", int.Parse(In_Scholarships.Text));
-                querySaveScenario.Parameters.AddWithValue("@StudentLoan", int.Parse(Out_StudentLoan.Text));
-                querySaveScenario.Parameters.AddWithValue("@Savings", int.Parse(Out_Savings.Text));
-                querySaveScenario.Parameters.AddWithValue("@MonthlyPay", int.Parse(Out_MonthlyPayment.Text));
-                querySaveScenario.Parameters.AddWithValue("@ColMR", int.Parse(Out_ColMonthlyRaw.Text));
-                querySaveScenario.Parameters.AddWithValue("@ColIMR", int.Parse(Out_ColInitDisc.Text));
-                querySaveScenario.Parameters.AddWithValue("@ColLD", int.Parse(Out_ColLifetimeDisc.Text));
-                querySaveScenario.Parameters.AddWithValue("@ColNPV", int.Parse(Out_ColLifetimeNPV.Text));
-                querySaveScenario.Parameters.AddWithValue("@HsMR", int.Parse(Out_HsMonthlyRaw.Text));
-                querySaveScenario.Parameters.AddWithValue("@HsIMR", int.Parse(Out_HsInitDisc.Text));
-                querySaveScenario.Parameters.AddWithValue("@HsLD", int.Parse(Out_HsLifetimeDisc.Text));
-                querySaveScenario.Parameters.AddWithValue("@HsNPV", int.Parse(Out_HsLifetimeNPV.Text));
-                querySaveScenario.Parameters.AddWithValue("@DifM", int.Parse(Out_DiffMonthlyRaw.Text));
-                querySaveScenario.Parameters.AddWithValue("@DifIM", int.Parse(Out_DiffInitDisc.Text));
-                querySaveScenario.Parameters.AddWithValue("@DifL", int.Parse(Out_DiffLifetimeDisc.Text));
-                querySaveScenario.Parameters.AddWithValue("@DifNPV", int.Parse(Out_DiffLifetimeNPV.Text));
-                querySaveScenario.Parameters.AddWithValue("@Date", DateTime.Now);
-                querySaveScenario.Parameters.AddWithValue("@Session", In_ScenarioName.Text);
-                if((string)Session["Mode"] == "advanced")
+                string saveScenario;
+                SqlCommand querySaveScenario;
+                openCon = new SqlConnection(connectionString);
+                saveScenario = "INSERT INTO UserHistory (UserID, CollegeCareer, HSJob, College, CollegePay, HSPay, PartTimeWork, Gifts, Scholarships," +
+                "Tuition, StudentLoan, Savings, MonthlyPayment, CollegeMonthlyRaw, CollegeInitialMonthlyRaw, CollegeLifetimeDiscretionary, CollegeNPV, " +
+                "HSMonthlyRaw, HSInitialMonthlyRaw, HSLifetimeDiscretionary, HSNPV, DifferenceMonthly, DifferenceInitialMonthly, DifferenceLifetime, DifferenceNPV," +
+                "DateCreated, SessionName) VALUES (@UID, @ColCareer, @HsJob, @College, @ColSalary, @HsSalary, @PartTime, @Gifts, @Scholarships, @Tuition, @StudentLoan," +
+                "@Savings, @MonthlyPay, @ColMR, @ColIMR, @ColLD, @ColNPV, @HsMR, @HsIMR, @HsLD, @HsNPV, @DifM, @DifIM, @DifL, @DifNPV, @Date, @Session)";
+                try
                 {
-                    querySaveScenario.Parameters.AddWithValue("@ColCareer", In_ColCareer.Text);
-                    querySaveScenario.Parameters.AddWithValue("@HsJob", In_HsCareer.Text);
-                    querySaveScenario.Parameters.AddWithValue("@College", In_College.Text);
-                    querySaveScenario.Parameters.AddWithValue("@ColSalary", int.Parse(In_ColSalary.Text));
-                    querySaveScenario.Parameters.AddWithValue("@HsSalary", int.Parse(In_HsSalary.Text));
-                    querySaveScenario.Parameters.AddWithValue("@Tuition", int.Parse(In_Tuition.Text));
+                    openCon.Open();
+                    querySaveScenario = new SqlCommand(saveScenario, openCon);
+                    querySaveScenario.Parameters.AddWithValue("@UID", user.GetUserID());
+                    querySaveScenario.Parameters.AddWithValue("@PartTime", int.Parse(In_PartTimeWork.Text));
+                    querySaveScenario.Parameters.AddWithValue("@Gifts", int.Parse(In_Gifts.Text));
+                    querySaveScenario.Parameters.AddWithValue("@Scholarships", int.Parse(In_Scholarships.Text));
+                    querySaveScenario.Parameters.AddWithValue("@StudentLoan", int.Parse(Out_StudentLoan.Text));
+                    querySaveScenario.Parameters.AddWithValue("@Savings", int.Parse(Out_Savings.Text));
+                    querySaveScenario.Parameters.AddWithValue("@MonthlyPay", int.Parse(Out_MonthlyPayment.Text));
+                    querySaveScenario.Parameters.AddWithValue("@ColMR", int.Parse(Out_ColMonthlyRaw.Text));
+                    querySaveScenario.Parameters.AddWithValue("@ColIMR", int.Parse(Out_ColInitDisc.Text));
+                    querySaveScenario.Parameters.AddWithValue("@ColLD", int.Parse(Out_ColLifetimeDisc.Text));
+                    querySaveScenario.Parameters.AddWithValue("@ColNPV", int.Parse(Out_ColLifetimeNPV.Text));
+                    querySaveScenario.Parameters.AddWithValue("@HsMR", int.Parse(Out_HsMonthlyRaw.Text));
+                    querySaveScenario.Parameters.AddWithValue("@HsIMR", int.Parse(Out_HsInitDisc.Text));
+                    querySaveScenario.Parameters.AddWithValue("@HsLD", int.Parse(Out_HsLifetimeDisc.Text));
+                    querySaveScenario.Parameters.AddWithValue("@HsNPV", int.Parse(Out_HsLifetimeNPV.Text));
+                    querySaveScenario.Parameters.AddWithValue("@DifM", int.Parse(Out_DiffMonthlyRaw.Text));
+                    querySaveScenario.Parameters.AddWithValue("@DifIM", int.Parse(Out_DiffInitDisc.Text));
+                    querySaveScenario.Parameters.AddWithValue("@DifL", int.Parse(Out_DiffLifetimeDisc.Text));
+                    querySaveScenario.Parameters.AddWithValue("@DifNPV", int.Parse(Out_DiffLifetimeNPV.Text));
+                    querySaveScenario.Parameters.AddWithValue("@Date", DateTime.Now);
+                    querySaveScenario.Parameters.AddWithValue("@Session", In_ScenarioName.Text);
+                    if ((string)Session["Mode"] == "advanced")
+                    {
+                        querySaveScenario.Parameters.AddWithValue("@ColCareer", In_ColCareer.Text);
+                        querySaveScenario.Parameters.AddWithValue("@HsJob", In_HsCareer.Text);
+                        querySaveScenario.Parameters.AddWithValue("@College", In_College.Text);
+                        querySaveScenario.Parameters.AddWithValue("@ColSalary", int.Parse(In_ColSalary.Text));
+                        querySaveScenario.Parameters.AddWithValue("@HsSalary", int.Parse(In_HsSalary.Text));
+                        querySaveScenario.Parameters.AddWithValue("@Tuition", int.Parse(In_Tuition.Text));
+                    }
+                    else
+                    {
+                        querySaveScenario.Parameters.AddWithValue("@ColCareer", JobList.SelectedItem.Value);
+                        querySaveScenario.Parameters.AddWithValue("@HsJob", JobList_HS.SelectedItem.Value);
+                        querySaveScenario.Parameters.AddWithValue("@College", SchoolList.SelectedItem.Value);
+                        querySaveScenario.Parameters.AddWithValue("@ColSalary", int.Parse(JobSalary.Text));
+                        querySaveScenario.Parameters.AddWithValue("@HsSalary", int.Parse(JobSalary_HS.Text));
+                        querySaveScenario.Parameters.AddWithValue("@Tuition", int.Parse(SchoolTuition.Text));
+                    }
+                    querySaveScenario.CommandType = CommandType.Text;
+                    querySaveScenario.ExecuteNonQuery();
+                    querySaveScenario.Dispose();
+                    openCon.Close();
+                    Session["User"] = user;
+                    Response.Redirect("history.aspx");
                 }
-                else
+                catch (SqlException error)
                 {
-                    querySaveScenario.Parameters.AddWithValue("@ColCareer", JobList.SelectedItem.Value);
-                    querySaveScenario.Parameters.AddWithValue("@HsJob", JobList_HS.SelectedItem.Value);
-                    querySaveScenario.Parameters.AddWithValue("@College", SchoolList.SelectedItem.Value);
-                    querySaveScenario.Parameters.AddWithValue("@ColSalary", int.Parse(JobSalary.Text));
-                    querySaveScenario.Parameters.AddWithValue("@HsSalary", int.Parse(JobSalary_HS.Text));
-                    querySaveScenario.Parameters.AddWithValue("@Tuition", int.Parse(SchoolTuition.Text));
+                    openCon.Close();
+                    err_message.Text = error.Message;
                 }
-                querySaveScenario.CommandType = CommandType.Text;
-                querySaveScenario.ExecuteNonQuery();
-                querySaveScenario.Dispose();
-                openCon.Close();
-                Session["User"] = user;
-                Response.Redirect("history.aspx");
             }
-            catch (SqlException error)
+            else
             {
-                openCon.Close();
-                err_message.Text = error.Message;
+                err_message.Text = "Please make sure all fields have values.";
             }
+            
         }
         protected void GetHistoryData()
         {

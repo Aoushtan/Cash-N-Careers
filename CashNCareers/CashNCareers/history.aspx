@@ -51,7 +51,7 @@ th, td {
                     </div>
                 </table>
                 <br /><br />
-                <asp:Button id="edit_btn" runat="server" Text="Edit Scenario" OnClick="edit_btn_Click" />
+                <asp:Button id="edit_btn" runat="server" Text="View/Modify" OnClick="edit_btn_Click" />
             </form>
          </center>
     </div>

@@ -211,15 +211,6 @@ namespace CashNCareers {
         protected global::System.Web.UI.WebControls.Label Out_StudentLoan;
         
         /// <summary>
-        /// Out_Savings control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Out_Savings;
-        
-        /// <summary>
         /// Out_MonthlyPayment control.
         /// </summary>
         /// <remarks>
@@ -227,6 +218,15 @@ namespace CashNCareers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Out_MonthlyPayment;
+        
+        /// <summary>
+        /// Out_Savings control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Out_Savings;
         
         /// <summary>
         /// Out_ColMonthlyRaw control.

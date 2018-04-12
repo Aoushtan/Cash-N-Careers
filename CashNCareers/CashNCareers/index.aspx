@@ -39,7 +39,7 @@
 			        Email: <asp:TextBox Id="login_user_email" runat="server"></asp:TextBox><br/>
 			        Password: <asp:TextBox ID="login_user_pass" runat="server" TextMode="Password"></asp:TextBox><br />
 			        <br/><br/>
-			        <asp:Button id="login_button" runat="server" Text="Log In" OnClick="login_button_Click"></asp:Button>
+			        <asp:Button id="login_button" runat="server" Text="Login" OnClick="login_button_Click"></asp:Button>
 		        </div>
 		        <br/><br />
             </form>
