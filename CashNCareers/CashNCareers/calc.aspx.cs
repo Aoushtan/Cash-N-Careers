@@ -9,51 +9,64 @@ namespace CashNCareers
 {
     public partial class calc : System.Web.UI.Page
     {
+        //Class variables
         User user;
-        static string path = "C:\\CNC\\CNC.xlsm";
+        static string path = "C:\\CNC\\CNC.xlsm"; //Path to the excel file for calculations (THIS MUST BE EXACT).
         static string connectionString = "Data Source=141.218.104.41,1433;Network=DBMSSOCN;Initial Catalog=Cash-n-CareerTeam02;User ID=Austin;Password=Lema1996";
-        SqlConnection openCon;
-        int currentID;
-        bool editing;
+        SqlConnection openCon; //SQL connection
+        int currentID; //The current scenario's ID
+        bool editing; //A bool to see if we're editing or creating a new scenario
+        //Lists to hold the drop down menu information (these are static so that they don't get updated on post back)
         static List<string> job_titles = new List<string>();
         static List<string> job_salary = new List<string>();
         static List<string> school_name = new List<string>();
         static List<string> school_tuition = new List<string>();
+        //Method for page loading
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
+                //Assign the user session variable to user
                 user = (User)Session["User"];
+                //Check if the user exists right now
                 if (user.UserID == -1)
                 {
+                    //if not redirect the user to the index page
                     Response.Redirect("index.aspx");
                 }
+                //Check if this is a post back (makes things inside only run once)
                 if (!IsPostBack)
                 {
+                    //Loads all of the dropdown menu data
                     LoadBasicMode();
+                    //Enables basic mode by default
                     basic_mode_Click(basic_mode, EventArgs.Empty);
 
                 }
-                //Could potentially change this whole system for history editing by using if(!IsPostBack) here, which does something only on page load rather than refresh, but keep this for now.
+                //Checks to see if the user is currently editing 
                 if (user.CurrentHistID != -1)
                 {
+                    //Enable advanced mode (makes editing way easier than trying to load basic mode)
                     advanced_mode_Click(advanced_mode, EventArgs.Empty);
-                    GetHistoryData();
-                    DropOldRecord();
-                    user.SetCurrentSituation(-1);
+                    GetHistoryData(); //Get the data for the selected scenario
+                    DropOldRecord(); //Drops the old data so we can replace it
+                    user.SetCurrentSituation(-1); //Defaults the current scenario to avoid issues with saving a new one
                 }
             }
             catch (Exception)
             {
+                //Move the user to the index page if they aren't logged in
                 Response.Redirect("index.aspx");
             }
         }
+        //Method that ensures all fields have the correct data in them
         protected bool ValidateInputs()
         {
-            int int_test;
+            int int_test; //just a variable used as an integer
+            //Checks to see if we're in advanced mode
             if((string)Session["Mode"] == "advanced")
             {
-                //Returns true if there are blanks (Not valid values)
+                //This check to make sure all fields are filled in, and that all relevant fields contain whole numbers for advanced mode
                 if (In_ScenarioName.Text == "" || In_College.Text == "" || In_Tuition.Text == "" || In_Scholarships.Text == "" || In_PartTimeWork.Text == "" || In_Gifts.Text == "" ||
                     In_ColCareer.Text == "" || In_ColSalary.Text == "" || In_HsCareer.Text == "" || In_HsSalary.Text == "")
                 {
@@ -71,9 +84,9 @@ namespace CashNCareers
                     return true;
                 }
             }
-            else
+            else //basic mode
             {
-                //Returns true if there are blanks (Not valid values)
+                //Checks to make sure all fields have a value and that all relevant fields contain whole numbers
                 if (In_ScenarioName.Text == "" || SchoolList.SelectedItem.Value == "" || SchoolTuition.Text == "" || In_Scholarships.Text == "" || In_PartTimeWork.Text == "" || In_Gifts.Text == "" ||
                     JobList.SelectedItem.Value == "" || JobSalary.Text == "" || JobList_HS.SelectedItem.Value == "" || JobSalary_HS.Text == "")
                 {
@@ -93,13 +106,14 @@ namespace CashNCareers
             }
             
         }
+        //This method handles all connections to the excel file.  YOU WERE DOCUMENTING ALL THE CODE MAROON
         protected void SendToExcel()
         {
             //Excel variables
-            Application excelApp = new Application();
-            excelApp.Visible = true;
-            Workbook workBook = excelApp.Workbooks.Open(path);
-            Worksheet workSheet = workBook.Sheets["Career Comparison"];
+            Application excelApp = new Application(); //Application
+            excelApp.Visible = true; //Makes the workbook visible on the server
+            Workbook workBook = excelApp.Workbooks.Open(path); //Opens the workbook
+            Worksheet workSheet = workBook.Sheets["Career Comparison"]; //Name of the worksheet
             //Get required user data
             int tuition;
             int col_salary;
@@ -107,13 +121,13 @@ namespace CashNCareers
             int scholarships = int.Parse(In_Scholarships.Text);
             int part_time = int.Parse(In_PartTimeWork.Text);
             int gifts = int.Parse(In_Gifts.Text);
-            if((string)Session["Mode"] == "advanced")
+            if((string)Session["Mode"] == "advanced") //Check for advanced mode to get the right stuff
             {
                 tuition = int.Parse(In_Tuition.Text);
                 col_salary = int.Parse(In_ColSalary.Text);
                 hs_salary = int.Parse(In_HsSalary.Text);
             }
-            else
+            else //basic mode
             {
                 tuition = int.Parse(SchoolTuition.Text);
                 col_salary = int.Parse(JobSalary.Text);
@@ -129,7 +143,7 @@ namespace CashNCareers
             workSheet.Cells[20, "E"] = scholarships;
             workSheet.Cells[20, "F"] = tuition;
 
-            //Read values from excel
+            //Read values from excel cells
             string student_loan = Math.Round((workSheet.Cells[24, "C"] as Range).Value).ToString();
             string savings = Math.Round((workSheet.Cells[24, "F"] as Range).Value).ToString();
             string monthly_payment = Math.Round((workSheet.Cells[28, "F"] as Range).Value).ToString();
@@ -164,25 +178,30 @@ namespace CashNCareers
             Out_DiffLifetimeNPV.Text = diff_NPV;
 
             //Exit excel
-            workBook.Close(0);
-            excelApp.Quit();
+            workBook.Close(0); //Close the workbook
+            excelApp.Quit(); //Quit the application and close it out of memory
+            err_message.Text = "";
         }
-
+        //Method that fires when the user clicks calculate
         protected void calculate_Click(object sender, EventArgs e)
         {
+            //Makes sure inputs are valid
             if (ValidateInputs())
             {
+                //Calls the excel function
                 SendToExcel();
             }
         }
-
+        //Method that fires when the user clicks the save scenario button
         protected void save_senario_Click(object sender, EventArgs e)
         {
+            //again makes sure the inputs are valid
             if (ValidateInputs())
             {
                 string saveScenario;
                 SqlCommand querySaveScenario;
                 openCon = new SqlConnection(connectionString);
+                //Super long query string to insert the data into the database
                 saveScenario = "INSERT INTO UserHistory (UserID, CollegeCareer, HSJob, College, CollegePay, HSPay, PartTimeWork, Gifts, Scholarships," +
                 "Tuition, StudentLoan, Savings, MonthlyPayment, CollegeMonthlyRaw, CollegeInitialMonthlyRaw, CollegeLifetimeDiscretionary, CollegeNPV, " +
                 "HSMonthlyRaw, HSInitialMonthlyRaw, HSLifetimeDiscretionary, HSNPV, DifferenceMonthly, DifferenceInitialMonthly, DifferenceLifetime, DifferenceNPV," +
@@ -190,6 +209,7 @@ namespace CashNCareers
                 "@Savings, @MonthlyPay, @ColMR, @ColIMR, @ColLD, @ColNPV, @HsMR, @HsIMR, @HsLD, @HsNPV, @DifM, @DifIM, @DifL, @DifNPV, @Date, @Session)";
                 try
                 {
+                    //Open the connection and assign variables to the sql query
                     openCon.Open();
                     querySaveScenario = new SqlCommand(saveScenario, openCon);
                     querySaveScenario.Parameters.AddWithValue("@UID", user.GetUserID());
@@ -213,6 +233,7 @@ namespace CashNCareers
                     querySaveScenario.Parameters.AddWithValue("@DifNPV", int.Parse(Out_DiffLifetimeNPV.Text));
                     querySaveScenario.Parameters.AddWithValue("@Date", DateTime.Now);
                     querySaveScenario.Parameters.AddWithValue("@Session", In_ScenarioName.Text);
+                    //Check for advanced mode to make sure we have the right fields
                     if ((string)Session["Mode"] == "advanced")
                     {
                         querySaveScenario.Parameters.AddWithValue("@ColCareer", In_ColCareer.Text);
@@ -222,7 +243,7 @@ namespace CashNCareers
                         querySaveScenario.Parameters.AddWithValue("@HsSalary", int.Parse(In_HsSalary.Text));
                         querySaveScenario.Parameters.AddWithValue("@Tuition", int.Parse(In_Tuition.Text));
                     }
-                    else
+                    else //basic mode
                     {
                         querySaveScenario.Parameters.AddWithValue("@ColCareer", JobList.SelectedItem.Value);
                         querySaveScenario.Parameters.AddWithValue("@HsJob", JobList_HS.SelectedItem.Value);
@@ -232,11 +253,11 @@ namespace CashNCareers
                         querySaveScenario.Parameters.AddWithValue("@Tuition", int.Parse(SchoolTuition.Text));
                     }
                     querySaveScenario.CommandType = CommandType.Text;
-                    querySaveScenario.ExecuteNonQuery();
+                    querySaveScenario.ExecuteNonQuery(); //Execute the query
                     querySaveScenario.Dispose();
                     openCon.Close();
-                    Session["User"] = user;
-                    Response.Redirect("history.aspx");
+                    Session["User"] = user; //save the user 
+                    Response.Redirect("history.aspx"); //move the user to the history page
                 }
                 catch (SqlException error)
                 {
@@ -250,6 +271,7 @@ namespace CashNCareers
             }
             
         }
+        //Get the data for the given scenario (for editing)
         protected void GetHistoryData()
         {
             SqlCommand queryHistoryData;
@@ -328,6 +350,7 @@ namespace CashNCareers
             //Skip 27 because it isn't being displayed
             In_ScenarioName.Text = data[27];
         }
+        //Method that removes the old record to replace it with the new for editing
         protected void DropOldRecord()
         {
             string deleteRecord;
@@ -350,6 +373,7 @@ namespace CashNCareers
                 err_message.Text = error.Message;
             }
         }
+        //Method that fires when you click the basic mode button
         protected void basic_mode_Click(object sender, EventArgs e)
         {
             mode_message.Text = "You are currently in basic mode.  Basic mode allows you to select your college and career from a dropdown menu.  Once a college is selected, the tuition field will automatically be filled" +
@@ -371,7 +395,7 @@ namespace CashNCareers
             //Set the session variable to basic mode
             Session["Mode"] = "basic";
         }
-
+        //Method that fires when you click the advanced mode button
         protected void advanced_mode_Click(object sender, EventArgs e)
         {
             mode_message.Text = "You are currently in advanced mode.  Advanced mode requires you to manually enter tuition and salary for entered colleges and careers.  You can use the links near the fields to help with " +
@@ -393,27 +417,32 @@ namespace CashNCareers
             //Set the session variable to basic mode
             Session["Mode"] = "advanced";
         }
+        //Method that calls other methods to load up the basic mode data
         protected void LoadBasicMode()
         {
             GetSchoolData();
             GetJobData();
             BindBasicData();
         }
+        //Method that fires when you change the selected college in the dropdown menu
         protected void School_Change(Object sender, EventArgs e)
         {
             int index = school_name.IndexOf(SchoolList.SelectedItem.Value);
             SchoolTuition.Text = school_tuition[index].ToString();
         }
+        //Method that fires when you change the selected job in the dropdown menu for college education
         protected void Job_Change_Col(Object sender, EventArgs e)
         {
             int index = job_titles.IndexOf(JobList.SelectedItem.Value);
             JobSalary.Text = job_salary[index].ToString();
         }
+        //Method that fires when you change the selected job in the dropdown menu for highschool education
         protected void Job_Change_HS(Object sender, EventArgs e)
         {
             int index = job_titles.IndexOf(JobList_HS.SelectedItem.Value);
             JobSalary_HS.Text = job_salary[index].ToString();
         }
+        //Method that gets the college names and tuition data from the sql server and assigns it to the list in the class variables
         protected void GetSchoolData()
         {
             SqlCommand queryGetSchoolInfo;
@@ -448,6 +477,7 @@ namespace CashNCareers
                 err_message.Text = error.Message;
             }
         }
+        //Method that gets the career information (name and salary) from the sql server and assigns it to the lists in the class variables
         protected void GetJobData()
         {
             SqlCommand queryGetJobInfo;
@@ -482,6 +512,8 @@ namespace CashNCareers
                 err_message.Text = error.Message;
             }
         }
+        //Method that takes one list and splits it into 2 lists alternatively (every other item in the list)
+        //This is used to split the college name and college tuition into different lists, same with careers and salary
         protected void SplitList(List<string> data, string type)
         {
             int counter = 0;
@@ -512,6 +544,7 @@ namespace CashNCareers
                 counter++;
             }
         }
+        //Method that binds all of the data to the dropdown menus
         protected void BindBasicData()
         {
             SchoolList.DataSource = CreateSchoolList();
@@ -527,6 +560,7 @@ namespace CashNCareers
             JobList.DataBind();
             JobList_HS.DataBind();
         }
+        //Creates the list of data for the college dropdown menu
         protected ICollection CreateSchoolList()
         {
             System.Data.DataTable dt = new System.Data.DataTable();
@@ -539,6 +573,7 @@ namespace CashNCareers
             DataView dv = new DataView(dt);
             return dv;
         }
+        //Creates the list of data for the career dropdown menu
         protected ICollection CreateJobList()
         {
             System.Data.DataTable dt = new System.Data.DataTable();
@@ -551,6 +586,7 @@ namespace CashNCareers
             DataView dv = new DataView(dt);
             return dv;
         }
+        //Creates a new row of data in the dropdown menu, this is called for each college/career in the lists and gives them their values
         protected DataRow CreateRow(string text, string value, System.Data.DataTable dt)
         {
             DataRow dr = dt.NewRow();

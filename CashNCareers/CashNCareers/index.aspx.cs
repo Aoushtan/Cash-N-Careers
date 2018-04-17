@@ -18,7 +18,10 @@ namespace CashNCareers.cs
         //This method runs when the page loads
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Do something when the page loads
+            //Sign the user out if they're on the index page.
+            user.SetCurrentSituation(-1);
+            user.SetUserEmail("");
+            user.SetUserID(-1);
         }
         //Method that runs when the register button is clicked.
         protected void register_Click(object sender, EventArgs e)

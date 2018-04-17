@@ -6,7 +6,6 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <meta name="author" content="Austin Lemacks">
 	<meta name="description" content="">
 	<title>Cash N Careers</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css"/>
@@ -43,11 +42,16 @@
 		        </div>
 		        <br/><br />
             </form>
-            <asp:Label ID="err_message" Text="" runat="server"></asp:Label>
+            <asp:Label ID="err_message" Text="" runat="server" style="color:red"></asp:Label>
             </center>
         </div>
 		<div id="footer">
-				<font size="1">Last updated: March 12, 2018</font>
+		    <font size="2">Last updated: April 16, 2018<br />
+                    Western Michigan University<br />Haworth College of business<br />CIS 4990 Enterprise Project
+                    Tool Designed by Dr. Matthew Ross.  Project for Dr. Muhammad Razi<br />
+                    Project leads: Rachel Larson, Kelsey Hood.  Business Analysts: Justin Johnson, Kruti Patel.<br />
+                    Systems Analysts: Hanen Alwafi, John Bruestle, Marzouq Albaiji.  Systems Developers: Austin Lemacks, Zack Filary, Steven Freds.
+			</font>
 		</div>
 	</div>
 </body>

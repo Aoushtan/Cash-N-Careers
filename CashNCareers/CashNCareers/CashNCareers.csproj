@@ -70,7 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="calc.aspx" />
-    <Content Include="CNC.xlsm" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
@@ -83,8 +82,8 @@
   <ItemGroup>
     <Content Include="css\style.css" />
     <Content Include="history.aspx" />
-    <Content Include="index.aspx" />
     <Content Include="images\header.jpg" />
+    <Content Include="index.aspx" />
     <Content Include="js\index_logic.js" />
     <Content Include="js\jquery-3.3.1.min.js" />
     <Content Include="Web.config" />

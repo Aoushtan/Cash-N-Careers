@@ -58,6 +58,42 @@ namespace CashNCareers {
         protected global::System.Web.UI.WebControls.TextBox In_ScenarioName;
         
         /// <summary>
+        /// In_ColCareer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox In_ColCareer;
+        
+        /// <summary>
+        /// JobList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList JobList;
+        
+        /// <summary>
+        /// In_ColSalary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox In_ColSalary;
+        
+        /// <summary>
+        /// JobSalary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label JobSalary;
+        
+        /// <summary>
         /// In_College control.
         /// </summary>
         /// <remarks>
@@ -119,42 +155,6 @@ namespace CashNCareers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox In_Gifts;
-        
-        /// <summary>
-        /// In_ColCareer control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox In_ColCareer;
-        
-        /// <summary>
-        /// JobList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList JobList;
-        
-        /// <summary>
-        /// In_ColSalary control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox In_ColSalary;
-        
-        /// <summary>
-        /// JobSalary control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label JobSalary;
         
         /// <summary>
         /// In_HsCareer control.
