@@ -60,7 +60,7 @@ namespace CashNCareers
             List<string> data = new List<string>(); //List to hold all of their data
             ArrayList al = new ArrayList(); //List to hold each row of data coming in from the database
             //Connecting to the database
-            using (SqlConnection openCon = new SqlConnection("Data Source=141.218.104.41,1433;Network=DBMSSOCN;Initial Catalog=Cash-n-CareerTeam02;User ID=Austin;Password=Lema1996"))
+            using (SqlConnection openCon = new SqlConnection(""))
             {
                 //SQL query
                 string getHistoryInfo = "SELECT HistID, SessionName, College, CollegeCareer, CollegePay, HSJob, HSPay, DateCreated FROM UserHistory WHERE UserID = @UID";

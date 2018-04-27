@@ -13,7 +13,7 @@ namespace CashNCareers.cs
         public User user = new User(); //Creating the User Object for the current user
         //This string is a long string used to connect to the sql server database.  Its format is as follows:
         //[IP];[Network protocol (have to use DBMSSOCN)];[Database];[Username];[Password]
-        string connectionString = "Data Source=141.218.104.41,1433;Network=DBMSSOCN;Initial Catalog=Cash-n-CareerTeam02;User ID=Austin;Password=Lema1996";
+        string connectionString = "";
         SqlConnection openCon; //Creates a new SQL connection
         //This method runs when the page loads
         protected void Page_Load(object sender, EventArgs e)

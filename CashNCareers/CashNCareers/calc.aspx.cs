@@ -11,8 +11,8 @@ namespace CashNCareers
     {
         //Class variables
         User user;
-        static string path = "C:\\CNC\\CNC.xlsm"; //Path to the excel file for calculations (THIS MUST BE EXACT).
-        static string connectionString = "Data Source=141.218.104.41,1433;Network=DBMSSOCN;Initial Catalog=Cash-n-CareerTeam02;User ID=Austin;Password=Lema1996";
+        static string path = "Put path to local Excel file here"; //Path to the excel file for calculations (THIS MUST BE EXACT).
+        static string connectionString = "";
         SqlConnection openCon; //SQL connection
         int currentID; //The current scenario's ID
         bool editing; //A bool to see if we're editing or creating a new scenario
